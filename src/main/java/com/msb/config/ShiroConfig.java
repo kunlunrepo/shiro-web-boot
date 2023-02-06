@@ -36,7 +36,10 @@ public class ShiroConfig {
         DefaultShiroFilterChainDefinition definition = new DefaultShiroFilterChainDefinition();
         Map<String, String> map = new LinkedHashMap<>();
         map.put("/login.html", "anon");
+        map.put("user/logout", "logout");
         map.put("/user/**", "anon");
+        map.put("/item/rememberMe", "user"); // 安全级别较低，采用user过滤器拦截 只要登录过，不需要重新登录就可以访问
+        map.put("/item/authentication", "authc");
         map.put("/item/select", "rolesOr[超级管理员,运营]");
         map.put("/item/delete", "perms[item:delete,item:insert]");
         map.put("/**", "authc");

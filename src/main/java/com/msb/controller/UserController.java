@@ -25,13 +25,15 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public String login(String username, String password) {
+    public String login(String username, String password, String rememberMe) {
         // 1.直接获取subject主体 不需要像shiro-simple手动整合
         Subject subject = SecurityUtils.getSubject();
 
         // 2.发起认证
         try {
-            subject.login(new UsernamePasswordToken(username, password));
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+            token.setRememberMe(rememberMe != null && "on".equals(rememberMe));
+            subject.login(token);
             return "login success";
         } catch (Exception e) {
             e.printStackTrace();

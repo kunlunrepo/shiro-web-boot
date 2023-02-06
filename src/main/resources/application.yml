@@ -12,7 +12,7 @@ mybatis:
 
 shiro:
   loginUrl: /login.html
-  unauthorizedUrl: /401.html
+  unauthorizedUrl: /401.html  # 针对过滤器链生效，针对注解不生效
 
 server:
   port: 8081

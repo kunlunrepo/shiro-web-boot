@@ -1,12 +1,14 @@
 package com.msb.entity;
 
+import java.io.Serializable;
+
 /**
  * description :
  *
  * @author kunlunrepo
  * date :  2023-02-02 17:11
  */
-public class User {
+public class User implements Serializable {
 
     private Integer id;
 
