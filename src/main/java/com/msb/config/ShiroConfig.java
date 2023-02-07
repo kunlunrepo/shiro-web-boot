@@ -2,11 +2,16 @@ package com.msb.config;
 
 import com.msb.filter.RolesOrAuthorizationFilter;
 import com.msb.realm.ShiroRealm;
+import com.msb.session.DefaultRedisSessionManager;
+import com.msb.session.RedisSessionDAO;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,9 +30,17 @@ import java.util.Map;
 public class ShiroConfig {
 
     @Bean
-    public DefaultWebSecurityManager securityManager(ShiroRealm realm){
+    protected SessionManager sessionManager(RedisSessionDAO redisSessionDAO) {
+        DefaultWebSessionManager sessionManager = new DefaultRedisSessionManager();
+        sessionManager.setSessionDAO(redisSessionDAO);
+        return sessionManager;
+    }
+
+    @Bean
+    public DefaultWebSecurityManager securityManager(ShiroRealm realm, SessionManager sessionManager){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(realm);
+        securityManager.setSessionManager(sessionManager);
         return securityManager;
     }
 
