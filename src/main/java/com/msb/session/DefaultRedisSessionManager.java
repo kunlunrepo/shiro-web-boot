@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * description :
  *
- * @author zhoujian
+ * @author kunlunrepo
  * date :  2023-02-07 09:40
  */
 public class DefaultRedisSessionManager extends DefaultWebSessionManager {

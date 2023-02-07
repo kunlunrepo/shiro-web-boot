@@ -1,5 +1,6 @@
 package com.msb.config;
 
+import com.msb.cache.RedisCacheManager;
 import com.msb.filter.RolesOrAuthorizationFilter;
 import com.msb.realm.ShiroRealm;
 import com.msb.session.DefaultRedisSessionManager;
@@ -37,10 +38,12 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultWebSecurityManager securityManager(ShiroRealm realm, SessionManager sessionManager){
+    public DefaultWebSecurityManager securityManager(ShiroRealm realm, SessionManager sessionManager, RedisCacheManager redisCacheManager){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(realm);
         securityManager.setSessionManager(sessionManager);
+        // 设置cacheManager，提示与redis交互
+        securityManager.setCacheManager(redisCacheManager);
         return securityManager;
     }
 

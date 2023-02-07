@@ -80,6 +80,7 @@ public class ShiroRealm extends AuthorizingRealm {
     // 授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        System.out.println("查询数据库");
         // 0.判断是否认证
         Subject subject = SecurityUtils.getSubject();
         if (subject == null) {
